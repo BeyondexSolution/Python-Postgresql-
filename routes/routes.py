@@ -5,7 +5,7 @@ from auth.auth import token_required
 routes_bp = Blueprint('routes', __name__)
 @routes_bp.route('/')
 def home():
-    return "Hello, Flask with MSSQL!"
+    return "Hello, Flask with POSTGRESQL!"
 
 @routes_bp.route("/login", methods=["POST"])
 def get_users():
