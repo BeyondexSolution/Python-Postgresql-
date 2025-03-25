@@ -31,3 +31,13 @@ def token_required(f):
         return f(*args, **kwargs)
 
     return decorated
+
+API_KEY = 'auth_key_123'
+
+# Function to check API key
+def check_api_key():
+    api_key = request.headers.get('Authorization')
+    if api_key != f'Bearer {API_KEY}':
+        return jsonify({'message': 'Unauthorized'})
+    return None
+
