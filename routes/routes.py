@@ -31,3 +31,15 @@ def postdoctor():
 @routes_bp.route('/getalldoctors', methods=['GET'])
 def getalldoctor():
     return doctorController.getall_doctor()
+
+@routes_bp.route('/getdoctor/<int:dr_recid>', methods=['GET'])
+def getdoctor(dr_recid):
+    return doctorController.get_doctor(dr_recid)
+
+@routes_bp.route('/updatedoctor/<int:dr_recid>', methods=['PUT'])
+def updatedoctor(dr_recid):
+    return doctorController.update_doctor(dr_recid)
+
+@routes_bp.route('/deletedoctor/<int:dr_recid>', methods=['DELETE'])
+def deletedoctor(dr_recid):
+    return doctorController.delete_doctor(dr_recid)

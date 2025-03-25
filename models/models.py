@@ -40,3 +40,5 @@ class errortable(db.Model):
     e_code = db.Column(db.String(10), nullable=False)
     e_description = db.Column(db.String(250), nullable=False)
     e_systemerrormessage = db.Column(db.String(255), nullable=False)
+
+    
