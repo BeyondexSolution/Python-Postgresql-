@@ -1,15 +1,11 @@
 from flask import request, jsonify
 from config.settings import db
 from models.models import hms_doctor, resulttable, errortable  # Import the updated User model
-from config.settings import check_api_key
 
 def post_doctor():
-  # Check for valid API key
+ 
     try:
-        # auth_error = check_api_key()
-        # if auth_error:
-        #     resulttable('post_doctor', 'failed', 'Unauthorized access attempt')
-        #     return auth_error  
+        
         data = request.get_json()
         dr_firstname = data.get('FirstName')
         dr_lastname = data.get('LastName')
@@ -63,10 +59,27 @@ def user_to_dict(hms_doctor):
 
 def get_doctor(dr_recid):
     try:
+        if dr_recid ==0:
+            doctor_data= {
+        "RecordId": "",
+        "FirstName": "",
+        "LastName": "",
+        "GlobalId": "",
+        "EmailId": "",
+        "PhoneNumber": "",
+        "AlternatePhone": "",
+        "Qualification": "",
+        "SpecialQualification": "",
+        "DateOfBirth": "",
+        "DateOfJoining": ""
+         }  
+            return jsonify({'status': 'Y', 'data': doctor_data}), 200
+
         doctor = hms_doctor.query.filter_by(dr_recid=dr_recid).first()
         if not doctor:
             return jsonify({'status': 'N', 'message': 'Doctor not found'}), 404
         return jsonify({'status': 'Y', 'data': user_to_dict(doctor)}), 200
+        
     except Exception as e:
         # errortable(str(e), traceback.format_exc(), 'some_system_error_message')  # Log the error details
         error = errortable.query.filter_by(e_recid=401).first()
@@ -87,11 +100,7 @@ def user_to_dict(doctor):
         "DateOfJoining": doctor.dr_dateofjoining
     }
 
-def update_doctor(dr_recid):
-    # Check for valid API key (authentication)
-    # auth_error = check_api_key()
-    # if auth_error:
-    #     return auth_error  # Ensure this returns a valid response    
+def update_doctor(dr_recid):    
     data = request.get_json()  # Get the JSON data from the request    
     # Extract fields from incoming data
     dr_firstname = data.get('FirstName')
@@ -135,11 +144,7 @@ def update_doctor(dr_recid):
 
 # 5. Delete: Delete doctor by RECORDID
 def delete_doctor(dr_recid):
-    # Check for valid API key
-    # auth_error = check_api_key()
-    # if auth_error:
-    #     resulttable('delete_doctor', 'failed', 'Unauthorized access attempt')
-    #     return auth_error
+    
     try:
         doctor = hms_doctor.query.get(dr_recid)  # Fetch the doctor by ID
         if doctor:
