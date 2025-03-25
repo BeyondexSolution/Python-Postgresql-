@@ -1,6 +1,6 @@
 from flask import Blueprint,jsonify
 from controllers import userController  # Example controller
-from auth.auth import token_required
+from auth.auth import token_required, check_api_key
 
 from controllers import doctorController
 
@@ -29,17 +29,21 @@ def postdoctor():
     return doctorController.post_doctor()
 
 @routes_bp.route('/getalldoctors', methods=['GET'])
+@check_api_key
 def getalldoctor():
     return doctorController.getall_doctor()
 
 @routes_bp.route('/getdoctor/<int:dr_recid>', methods=['GET'])
+@check_api_key
 def getdoctor(dr_recid):
     return doctorController.get_doctor(dr_recid)
 
 @routes_bp.route('/updatedoctor/<int:dr_recid>', methods=['PUT'])
+@check_api_key
 def updatedoctor(dr_recid):
     return doctorController.update_doctor(dr_recid)
 
 @routes_bp.route('/deletedoctor/<int:dr_recid>', methods=['DELETE'])
+@check_api_key
 def deletedoctor(dr_recid):
     return doctorController.delete_doctor(dr_recid)
