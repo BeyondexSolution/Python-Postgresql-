@@ -49,6 +49,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 
+venv
 # Translations
 *.mo
 *.pot
