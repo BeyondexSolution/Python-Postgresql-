@@ -1,5 +1,5 @@
 from flask import Blueprint,jsonify
-from controllers import userController  # Example controller
+from controllers import patientController, userController  # Example controller
 from auth.auth import token_required, check_api_key
 
 from controllers import doctorController
@@ -18,12 +18,8 @@ def get_users():
 def get_userdata():
     user_data = userController.get_all_users()
     return jsonify(user_data)
-# Add more routes here
 
-# from flask import Blueprint, request, jsonify
-
-# doctor_bp = Blueprint('doctor', __name__, url_prefix='/hms_doctor')
-
+#--------------------DOCTOR------------------------#
 @routes_bp.route('/postdoctor', methods=['POST'])
 def postdoctor():
     return doctorController.post_doctor()
@@ -47,3 +43,27 @@ def updatedoctor(dr_recid):
 @check_api_key
 def deletedoctor(dr_recid):
     return doctorController.delete_doctor(dr_recid)
+#--------------------PATIENT------------------------#
+@routes_bp.route('/postpatient', methods=['POST'])
+def postpatient():
+    return patientController.post_patient()
+
+@routes_bp.route('/getallpatients', methods=['GET'])
+@check_api_key
+def getallpatient():
+    return patientController.getall_patient()
+
+@routes_bp.route('/getpatient/<int:pa_recid>', methods=['GET'])
+@check_api_key
+def getpatient(pa_recid):
+    return patientController.get_patient(pa_recid)
+
+@routes_bp.route('/updatepatient/<int:pa_recid>', methods=['PUT'])
+@check_api_key
+def updatepatient(pa_recid):
+    return patientController.update_patient(pa_recid)
+
+@routes_bp.route('/deletepatient/<int:pa_recid>', methods=['DELETE'])
+@check_api_key
+def deletepatient(pa_recid):
+    return patientController.delete_patient(pa_recid)

@@ -41,4 +41,13 @@ class errortable(db.Model):
     e_description = db.Column(db.String(250), nullable=False)
     e_systemerrormessage = db.Column(db.String(255), nullable=False)
 
-    
+class hms_patient(db.Model):
+   __tablename__ = 'hms_patient'
+   pa_recid = db.Column(db.Integer, primary_key=True, autoincrement=True)
+   pa_firstname = db.Column(db.String(100), nullable=False)
+   pa_lastname = db.Column(db.String(100), nullable=False)
+   pa_emailid = db.Column(db.String(50), nullable=False)
+   pa_phonenumber = db.Column(db.String(20), nullable=False)
+   pa_alternatephone = db.Column(db.String(20), nullable=False)
+   pa_dateofbirth = db.Column(db.Date, nullable=False)
+   pa_dateofjoining = db.Column(db.Date, nullable=False) 
